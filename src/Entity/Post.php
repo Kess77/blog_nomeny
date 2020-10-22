@@ -2,11 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\PostRepository;
+use Cocur\Slugify\Slugify;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\PostRepository;
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 
 /**
  * @ORM\Entity(repositoryClass=PostRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class Post
 {
@@ -37,15 +40,31 @@ class Post
      */
     private $introduction;
 
-    /**
-     * @ORM\Column(type="text", length=255)
-     */
-    private $article;
+    
 
     /**
      * @ORM\Column(type="string", length=255)
      */
     private $slug;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $article;
+
+    /**
+     * fonction pour générer des slug à partir d'un titre
+     * 
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function initializeSlug(){
+       if(empty($this->slug)){
+           $slugify = new Slugify();
+           $this->slug = $slugify->slugify($this->title);
+       }
+
+    }
 
     public function getId(): ?int
     {
@@ -100,17 +119,7 @@ class Post
         return $this;
     }
 
-    public function getArticle(): ?string
-    {
-        return $this->article;
-    }
-
-    public function setArticle(string $article): self
-    {
-        $this->article = $article;
-
-        return $this;
-    }
+    
 
     public function getSlug(): ?string
     {
@@ -120,6 +129,18 @@ class Post
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getArticle(): ?string
+    {
+        return $this->article;
+    }
+
+    public function setArticle(string $article): self
+    {
+        $this->article = $article;
 
         return $this;
     }
