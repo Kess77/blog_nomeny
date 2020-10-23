@@ -18,7 +18,7 @@ class PostController extends AbstractController
         $posts = $repo->findAll();
 
         return $this->render('post/index.html.twig', [
-            
+
             'posts' => $posts
         ]);
     }
@@ -35,6 +35,20 @@ class PostController extends AbstractController
 
         return $this->render('post/show.html.twig',[
             'post'=>$post
+        ]);
+
+    }
+    /**
+     * Permet de créer des articles ou d'ajouter
+     * 
+     * @Route("posts/new",name="post_create")
+     *
+     * @return Response
+     */
+    public function create(){
+
+        return $this->render('post/create.html.twig',[
+
         ]);
 
     }
