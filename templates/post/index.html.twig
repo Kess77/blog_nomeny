@@ -3,18 +3,28 @@
 {% block title %}Hello PostController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/Users/rafenoarivo.nbp/blog_nomeny/blog_nomeny/src/Controller/PostController.php'|file_link(0) }}">src/Controller/PostController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/Users/rafenoarivo.nbp/blog_nomeny/blog_nomeny/templates/post/index.html.twig'|file_link(0) }}">templates/post/index.html.twig</a></code></li>
-    </ul>
-</div>
+{# Affichage des articles #}
+<div class="container">
+        <div class="row flex">
+        {% for post in posts %}
+            
+            {% set url = path('post_show',{'slug':post.slug})%}
+           
+            <div class="col-8 my-2">
+                <a href="{{url}}">
+                    <img src="{{ post.coverImage }}" alt="" >
+                </a>
+                <h3 class="h5">Deco</h3>
+                <h2>{{post.title}}</h2>
+                <p> {{post.createdAt | date('d-m-Y')}} -  <em>commentaires</em></p>
+                <p>{{post.article | raw }}</p>  
+                <a href="{{url}}">
+                    <div class="btn btn-warning">Lire la suite</div>
+                </a>
+            </div>
+        {% endfor %}
+           
+            
+        </div>
+    </div>
 {% endblock %}

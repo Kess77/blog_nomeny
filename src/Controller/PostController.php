@@ -2,18 +2,40 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\PostRepository;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class PostController extends AbstractController
 {
     /**
-     * @Route("/post", name="post")
+     * Permet d'afficher la page d'accueil des articles.
+     * 
+     * @Route("/posts", name="post_index")
      */
-    public function index()
+    public function index(PostRepository $repo)
     {
+        $posts = $repo->findAll();
+
         return $this->render('post/index.html.twig', [
-            'controller_name' => 'PostController',
+            
+            'posts' => $posts
         ]);
+    }
+     /**
+     * Permet d'afficher une seule articles 
+     * 
+     * @Route("posts/{slug}",name="post_show")
+     *
+     * 
+     */
+    public function show($slug,PostRepository $repo)
+    {
+        $post = $repo->findOneBySlug($slug);
+
+        return $this->render('post/show.html.twig',[
+            'post'=>$post
+        ]);
+
     }
 }
