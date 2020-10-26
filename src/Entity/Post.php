@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Cocur\Slugify\Slugify;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\PostRepository;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
@@ -51,6 +53,16 @@ class Post
      * @ORM\Column(type="text")
      */
     private $article;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="post", orphanRemoval=true)
+     */
+    private $image;
+
+    public function __construct()
+    {
+        $this->image = new ArrayCollection();
+    }
 
     /**
      * fonction pour générer des slug à partir d'un titre
@@ -141,6 +153,37 @@ class Post
     public function setArticle(string $article): self
     {
         $this->article = $article;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Image[]
+     */
+    public function getImage(): Collection
+    {
+        return $this->image;
+    }
+
+    public function addImage(Image $image): self
+    {
+        if (!$this->image->contains($image)) {
+            $this->image[] = $image;
+            $image->setPost($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Image $image): self
+    {
+        if ($this->image->contains($image)) {
+            $this->image->removeElement($image);
+            // set the owning side to null (unless already changed)
+            if ($image->getPost() === $this) {
+                $image->setPost(null);
+            }
+        }
 
         return $this;
     }
