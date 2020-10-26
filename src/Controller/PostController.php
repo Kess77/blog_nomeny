@@ -46,6 +46,15 @@ class PostController extends AbstractController
             $manager->persist($post);
             $manager->flush();
 
+            $this->addFlash(
+                'success',
+                "L'article <strong> {$post->getTitle()} </trong> a été bien enregistrée"
+            );
+
+            return $this->redirectToRoute("post_show",[
+                'slug'=>$post->getSlug()
+            ]);
+
         }
 
         return $this->render('post/create.html.twig',[
