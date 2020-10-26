@@ -2,10 +2,11 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Post;
-use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
+use App\Entity\Post;
+use App\Entity\Image;
+use Doctrine\Persistence\ObjectManager;
+use Doctrine\Bundle\FixturesBundle\Fixture;
 
 class AppFixtures extends Fixture
 {
@@ -25,8 +26,18 @@ class AppFixtures extends Fixture
                     ->setCreatedAt($faker->dateTime)
                     ->setArticle($article)
                     ->setIntroduction($faker->paragraph(2));
-                  
+
+        //gerer les images
+        for ($j=0; $j<= mt_rand(1,3);$j++){
             
+            $image = new Image();
+                $image  ->setUrl($faker->imageUrl())
+                        ->setCaption($faker->sentence(2))
+                        ->setPost($post);
+            
+            $manager->persist($image);
+
+            }
             $manager->persist($post);
         
         }
