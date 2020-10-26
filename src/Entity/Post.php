@@ -57,11 +57,11 @@ class Post
     /**
      * @ORM\OneToMany(targetEntity=Image::class, mappedBy="post", orphanRemoval=true)
      */
-    private $image;
+    private $images;
 
     public function __construct()
     {
-        $this->image = new ArrayCollection();
+        $this->images = new ArrayCollection();
     }
 
     /**
@@ -160,28 +160,28 @@ class Post
     /**
      * @return Collection|Image[]
      */
-    public function getImage(): Collection
+    public function getImages(): Collection
     {
-        return $this->image;
+        return $this->images;
     }
 
-    public function addImage(Image $image): self
+    public function addImages(Image $images): self
     {
-        if (!$this->image->contains($image)) {
-            $this->image[] = $image;
-            $image->setPost($this);
+        if (!$this->images->contains($images)) {
+            $this->images[] = $images;
+            $images->setPost($this);
         }
 
         return $this;
     }
 
-    public function removeImage(Image $image): self
+    public function removeImages(Image $images): self
     {
-        if ($this->image->contains($image)) {
-            $this->image->removeElement($image);
+        if ($this->images->contains($images)) {
+            $this->images->removeElement($images);
             // set the owning side to null (unless already changed)
-            if ($image->getPost() === $this) {
-                $image->setPost(null);
+            if ($images->getPost() === $this) {
+                $images->setPost(null);
             }
         }
 
