@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Post;
+use App\Form\PostType;
 use App\Repository\PostRepository;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,6 +24,25 @@ class PostController extends AbstractController
             'posts' => $posts
         ]);
     }
+    
+    /**
+     * Permet de créer des articles ou d'ajouter
+     * 
+     * @Route("posts/new",name="post_create")
+     *
+     * @return Response
+     */
+    public function create()
+    {
+        $post = new Post;
+        $form = $this->createForm(PostType::class,$post);
+
+        return $this->render('post/create.html.twig',[
+            'form'=>$form->createView()
+
+        ]);
+
+    }
      /**
      * Permet d'afficher une seule articles 
      * 
@@ -35,20 +56,6 @@ class PostController extends AbstractController
 
         return $this->render('post/show.html.twig',[
             'post'=>$post
-        ]);
-
-    }
-    /**
-     * Permet de créer des articles ou d'ajouter
-     * 
-     * @Route("posts/new",name="post_create")
-     *
-     * @return Response
-     */
-    public function create(){
-
-        return $this->render('post/create.html.twig',[
-
         ]);
 
     }

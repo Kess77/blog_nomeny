@@ -14,4 +14,4 @@ const $ = require('jquery');
 
 require('bootstrap');
 
-console.log('Hello Webpack Encore! Edit me in assets/app.js');
+//console.log('Hello Webpack Encore! Edit me in assets/app.js');
