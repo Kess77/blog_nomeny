@@ -38,11 +38,7 @@ class PostType extends AbstractType
                  DateType::class,
                  $this->getConfiguration("Date de création","jj/mm/aaaa")
             )
-            ->add(
-                'coverImage',
-                UrlType::class,
-                $this->getConfiguration("Url de l'image","Mettez une image sur votre article ")
-            )
+            
             ->add(
                 'introduction',
                 TextType::class,
@@ -52,6 +48,11 @@ class PostType extends AbstractType
                 'article',
                 TextareaType::class,
                 $this->getConfiguration("Article","Mettez ici votre article...")
+            )
+            ->add(
+                'coverImage',
+                UrlType::class,
+                $this->getConfiguration("Url de l'image","Mettez une image sur votre article ")
             )
             //gerer les sous formulaire pour afficher les images 
             

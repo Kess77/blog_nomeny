@@ -28,7 +28,7 @@ class PostController extends AbstractController
     }
     
     /**
-     * Permet de créer des articles ou d'ajouter
+     * Permet de créer des articles ou d'ajouter, lier avec des formulaires
      * 
      * @Route("posts/new",name="post_create")
      *
@@ -48,7 +48,7 @@ class PostController extends AbstractController
 
             $this->addFlash(
                 'success',
-                "L'article <strong> {$post->getTitle()} </trong> a été bien enregistrée"
+                "L'article <strong> {$post->getTitle()} </strong> a été bien enregistrée"
             );
 
             return $this->redirectToRoute("post_show",[
