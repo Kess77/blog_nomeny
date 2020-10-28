@@ -64,6 +64,8 @@ class Post
         $this->images = new ArrayCollection();
     }
 
+    
+
     /**
      * fonction pour générer des slug à partir d'un titre
      * 
@@ -165,26 +167,28 @@ class Post
         return $this->images;
     }
 
-    public function addImages(Image $images): self
+    public function addImage(Image $image): self
     {
-        if (!$this->images->contains($images)) {
-            $this->images[] = $images;
-            $images->setPost($this);
+        if (!$this->images->contains($image)) {
+            $this->images[] = $image;
+            $image->setPost($this);
         }
 
         return $this;
     }
 
-    public function removeImages(Image $images): self
+    public function removeImage(Image $image): self
     {
-        if ($this->images->contains($images)) {
-            $this->images->removeElement($images);
+        if ($this->images->contains($image)) {
+            $this->images->removeElement($image);
             // set the owning side to null (unless already changed)
-            if ($images->getPost() === $this) {
-                $images->setPost(null);
+            if ($image->getPost() === $this) {
+                $image->setPost(null);
             }
         }
 
         return $this;
     }
+
+    
 }

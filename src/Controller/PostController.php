@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Image;
 use App\Entity\Post;
 use App\Form\PostType;
 use App\Repository\PostRepository;
@@ -37,11 +38,22 @@ class PostController extends AbstractController
     public function create(Request $request, EntityManagerInterface $manager)
     {
         $post = new Post;
+        $image = new Image;
+        //$image->setUrl('http://placehold.it')
+        //      ->setCaption('titre 1');
+
+        //$post->addImage($image);
 
         $form = $this->createForm(PostType::class,$post);
 
         $form->handleRequest($request);
         if($form->isSubmitted()&& $form->isValid()){
+            foreach($post->getImages() as $image){
+                $image->setPost($post);
+                $manager->persist($image);
+            }
+
+
 
             $manager->persist($post);
             $manager->flush();

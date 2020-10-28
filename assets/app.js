@@ -12,6 +12,10 @@ import './styles/app.scss';
 // import $ from 'jquery';
 const $ = require('jquery');
 
+
+// create global $ and jQuery variables
+ global.$ = global.jQuery = $;
+
 require('bootstrap');
 
 //console.log('Hello Webpack Encore! Edit me in assets/app.js');

@@ -36,7 +36,7 @@
 </div>
 {# gerer les annonces sur addflash #}
         {% for label, messages in app.flashes %}
-            <div class="container">
+            <div class="container my-3">
                 <div class="alert alert-{{label}}">
                 {% for message in messages %}
                     <p>{{message| raw}}</p>

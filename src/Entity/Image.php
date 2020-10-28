@@ -28,10 +28,12 @@ class Image
     private $caption;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Post::class, inversedBy="image")
+     * @ORM\ManyToOne(targetEntity=Post::class, inversedBy="images")
      * @ORM\JoinColumn(nullable=false)
      */
     private $post;
+
+   
 
     public function getId(): ?int
     {
@@ -73,4 +75,6 @@ class Image
 
         return $this;
     }
+
+
 }
