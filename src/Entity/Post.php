@@ -3,15 +3,21 @@
 namespace App\Entity;
 
 use Cocur\Slugify\Slugify;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\PostRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=PostRepository::class)
  * @ORM\HasLifecycleCallbacks()
+ * @UniqueEntity(
+ * fields={"title"},
+ * message="Une autre annonce possède déjà ce titre "
+ * )
  */
 class Post
 {
@@ -24,6 +30,12 @@ class Post
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(
+     * min=20, 
+     * max=100, 
+     * minMessage = "Le titre doit faire plus de 10 caractères", 
+     * maxMessage = "Le titre ne peut pas faire plus de 100 caractères" 
+     * )
      */
     private $title;
 
@@ -34,11 +46,13 @@ class Post
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Url()
      */
     private $coverImage;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(min=20, minMessage="Le titre doit faire plus de 20 caractères")
      */
     private $introduction;
 
@@ -51,11 +65,13 @@ class Post
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\Length(min=100, minMessage="Le titre doit faire plus de 100 caractères")
      */
     private $article;
 
     /**
      * @ORM\OneToMany(targetEntity=Image::class, mappedBy="post", orphanRemoval=true)
+     * @Assert\Valid()
      */
     private $images;
 
@@ -84,6 +100,7 @@ class Post
     {
         return $this->id;
     }
+   
 
     public function getTitle(): ?string
     {

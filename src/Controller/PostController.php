@@ -75,6 +75,49 @@ class PostController extends AbstractController
         ]);
 
     }
+    /**
+     * Permet d'afficher le formulaire d'edition pour pouvoir modifier 
+     *
+     * @Route("posts/{slug}/edit",name="post_edit")
+     * 
+     * @return Response
+     */
+    public function edit(Post $post, Request $request, EntityManagerInterface $manager){
+        
+        //$post = $repo->findOneBySlug($slug);
+        $form = $this->createForm(PostType::class,$post);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted()&& $form->isValid()){
+            foreach($post->getImages() as $image){
+                $image->setPost($post);
+                $manager->persist($image);
+            }
+
+
+
+            $manager->persist($post);
+            $manager->flush();
+
+            $this->addFlash(
+                'success',
+                "L'article <strong> {$post->getTitle()} </strong> a été bien modifié"
+            );
+
+            return $this->redirectToRoute("post_show",[
+                'slug'=>$post->getSlug(),
+                
+            ]);
+
+        }
+
+        return $this->render('post/edit.html.twig',[
+            'form'=>$form->createView(),
+            'post'=>$post
+            
+        ]);
+    }
      /**
      * Permet d'afficher une seule articles 
      * 
@@ -82,7 +125,7 @@ class PostController extends AbstractController
      *
      * 
      */
-    public function show($slug,PostRepository $repo)
+    public function show($slug, PostRepository $repo)
     {
         $post = $repo->findOneBySlug($slug);
 
