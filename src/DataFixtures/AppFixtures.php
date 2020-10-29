@@ -4,15 +4,54 @@ namespace App\DataFixtures;
 
 use Faker\Factory;
 use App\Entity\Post;
+use App\Entity\User;
 use App\Entity\Image;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppFixtures extends Fixture
 {
+    private $encoder;
+    public function __construct(UserPasswordEncoderInterface $encoder)
+    {
+        $this->encoder = $encoder;
+    }
+
     public function load(ObjectManager $manager)
     {
         $faker    = Factory::create('fr_FR');
+
+        //gerer les User
+        $users = [];
+        $genres = ['male','female'];
+        for($i=1;$i<=3;$i++){
+            $user = new User();
+           
+            //generer une avatar 
+            $genre = $faker->randomElement($genres);
+
+            //API pour les photos (avatar)
+            $picture   = 'https://randomuser.me/api/portraits/';
+            $pictureId =   $faker->numberBetween(0, 99);
+
+            //condition ternaire(avatar)
+             $picture .= ($genre=='male'?'men/':'women/').$pictureId;
+        
+        //gerer les mots de passe 
+        
+            $hash = $this->encoder->encodePassword($user, 'password');
+            
+            $user   ->setFirstName($faker->firstName($genre))
+                    ->setLastName($faker->lastName($genre))
+                    ->setEmail($faker->email())
+                    ->setPassword($hash)
+                    ->setAvatar($picture)
+                    ;
+
+            $manager->persist($user); 
+            $users[] = $user;    
+        }
         
 
         // gerer les Post 
@@ -20,28 +59,30 @@ class AppFixtures extends Fixture
 
             $post = new Post();
             $article = '<p>' .join('</p><p>',$faker->paragraphs(5)).'</p>';
+            $user = $users[mt_rand(0,count($users)-1)];
 
             $post   ->setTitle($faker->sentence(4))
                     ->setCoverImage($faker->imageUrl())
                     ->setCreatedAt($faker->dateTime)
                     ->setArticle($article)
-                    ->setIntroduction($faker->paragraph(2));
-
-        //gerer les images
-        for ($j=0; $j<= mt_rand(1,3);$j++){
+                    ->setAuthor($user)
+                    ->setIntroduction($faker->sentence())
+                    ;
             
-            $image = new Image();
+            // Gérer les images 
+            for($j=1;$j<=mt_rand(1,2);$j++){
+                $image = new Image();
+
                 $image  ->setUrl($faker->imageUrl())
                         ->setCaption($faker->sentence(2))
                         ->setPost($post);
-            
-            $manager->persist($image);
+
+                $manager->persist($image);
 
             }
             $manager->persist($post);
-        
-        }
 
-        $manager->flush();
+        }
+            $manager->flush();
     }
 }
