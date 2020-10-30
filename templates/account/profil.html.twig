@@ -2,4 +2,13 @@
 
 {% block title %}Modifier le profile {% endblock %}
 
-{% block body %}{% endblock %}
+{% block body %}
+    <div class="container my-5">
+        <h1>Modifier le profile</h1>
+        {{form_start(form)}}
+        {{form_widget(form)}}
+        <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+        {{form_end(form)}}
+    </div>
+
+{% endblock %}
