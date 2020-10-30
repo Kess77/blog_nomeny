@@ -82,4 +82,15 @@ class AccountController extends AbstractController
         ]);
 
     }
+    /**
+     * Permet  d'affichet et de  traiter le formulaire de modification de profil 
+     * 
+     * @Route("/profil",name="account_profil")
+     *
+     * @return Response
+     */
+    public function profil (){
+
+        return $this->render('account/profil.html.twig')
+    }
 }

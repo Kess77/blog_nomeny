@@ -7,9 +7,15 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @UniqueEntity(
+ * fields ={"email"},
+ * message = "Une autre utilisateur s'est déjà inscrit avec cette adresse email, merci de la modifier"
+ * )
  */
 class User implements UserInterface
 {
@@ -22,21 +28,25 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $firstName;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $lastName;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Email(message ="Veuillez renseigner un email valide")
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Url(message="Veuillez rentrer une url valide")
      */
     private $avatar;
 
@@ -44,6 +54,14 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255)
      */
     private $password;
+
+    /**
+     * @Assert\EqualTo(
+     *         propertyPath="password",
+     *         message ="Vous n'avez pas bien confirmé votre mot de passe "
+     *          )
+     */
+    public $confirmPassword;
 
     /**
      * @ORM\OneToMany(targetEntity=Post::class, mappedBy="author")
@@ -122,6 +140,7 @@ class User implements UserInterface
 
         return $this;
     }
+    
 
     /**
      * @return Collection|Post[]
