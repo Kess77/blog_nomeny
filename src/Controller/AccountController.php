@@ -2,14 +2,18 @@
 
 namespace App\Controller;
 
+use App\Entity\UpdatePassword;
 use App\Entity\User;
 use App\Form\ProfilType;
 use App\Form\RegistrationType;
+use App\Form\UpdatePasswordType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormError;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -112,6 +116,54 @@ class AccountController extends AbstractController
         return $this->render('account/profil.html.twig',[
             'form'=>$form->createView(),
             
+        ]);
+    }
+    /**
+     * Permet de mettre à jour le mot de passe ou de modifier 
+     * 
+     * @Route("/account/update-password", name="account_update_password")
+     *
+     * @return Response
+     */
+    public function updatePassword(Request $request,EntityManagerInterface $manager,UserPasswordEncoderInterface $encoder)
+    {
+
+        $updatePassword = new UpdatePassword();
+        $user = $this->getUser();
+
+        $form = $this->createForm(UpdatePasswordType::class,$updatePassword);
+
+        $form->handleRequest($request);
+        if($form->isSubmitted()&& $form->isValid())
+        {
+
+            //Vérifier que le oldPassword du formulaire soit la mm que le password de user 
+            if(!password_verify($updatePassword->getOldPassword(),$user->getPassword()))
+            {
+                //gerer les erreur
+                $form->get('oldPassword')->addError(new FormError("Le mot de passe que vous avez tapé n'est pas votre mots de passe") );
+
+            } else{
+                    $newPassword = $updatePassword->getNewPassword();
+                    $hash        = $encoder->encodePassword($user,$newPassword);
+
+                    $user->setPassword($hash);
+                }
+        
+            
+            $manager->persist($user);
+            $manager->flush();
+
+            $this->addFlash(
+                'success',
+                'Votre nouveau mots de passe a été bien enregistré'
+            );
+
+           return  $this->redirectToRoute("homepage");
+        }
+
+        return $this->render('account/update-password.html.twig',[
+            'form'=>$form->createView()
         ]);
     }
 }
