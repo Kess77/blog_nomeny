@@ -6,6 +6,7 @@ use Faker\Factory;
 use App\Entity\Post;
 use App\Entity\User;
 use App\Entity\Image;
+use App\Entity\Role;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -21,6 +22,24 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $faker    = Factory::create('fr_FR');
+        $picture   = 'https://randomuser.me/api/portraits/';
+
+        //Gérer les Roles des utilisateurs
+        $adminRole = new Role();
+        $adminRole ->setTitle('ROLE_ADMIN');
+        $manager->persist($adminRole);
+
+        $adminUser = new User();
+        $adminUser->setFirstName('Nomeny')
+                ->setLastName('rafen')
+                ->setEmail('ra_nomeny@yahoo.fr')
+                ->setPassword($this->encoder->encodePassword($adminUser,'tiakoianao'))
+                ->setAvatar($picture)
+                ->addUserRole($adminRole);
+        $manager->persist($adminUser);
+                
+
+
 
         //gerer les User
         $users = [];
@@ -32,7 +51,7 @@ class AppFixtures extends Fixture
             $genre = $faker->randomElement($genres);
 
             //API pour les photos (avatar)
-            $picture   = 'https://randomuser.me/api/portraits/';
+            
             $pictureId =   $faker->numberBetween(0, 99);
 
             //condition ternaire(avatar)
