@@ -9,6 +9,7 @@ use App\Repository\PostRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -81,7 +82,7 @@ class PostController extends AbstractController
      * Permet d'afficher le formulaire d'edition pour pouvoir modifier 
      *
      * @Route("posts/{slug}/edit",name="post_edit")
-     * @Security(is_granted('ROLE_USER')and user===post.getAuthor()",message="Interdiction de modifier cette article")
+     * @Security("is_granted('ROLE_USER')and user===post.getAuthor()",message="Interdiction de modifier cette article")
      * 
      * @return Response
      */

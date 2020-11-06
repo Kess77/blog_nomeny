@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Comment;
 use Faker\Factory;
 use App\Entity\Post;
 use App\Entity\User;
@@ -99,9 +100,13 @@ class AppFixtures extends Fixture
                 $manager->persist($image);
 
             }
+            
             $manager->persist($post);
 
         }
+        
+
+        
             $manager->flush();
     }
 }

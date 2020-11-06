@@ -32,6 +32,19 @@
                     </a>
                 </div>          
             </div>
+            {# Mis en place des commentaires#}
+                {% if post.comments | length > 0 %}
+                    <h3 class="mb-3">commentaires</h3>
+                        {% for comment in post.comments %}
+                            <div class="bg-light rounded mb-3 py-3 px-3">
+                                <strong>{{comment.author.fullName}}</strong>a dit:
+                                <blockquote>{{comment.content}}</blockquote>
+                            </div>
+                        {% endfor %}
+                {% else %}
+                    <h3>Pas de commentaires</h3>
+                {% endif %}
+            {# A propos #}
             <div class="col-4 my-2">
                 <img src="https://via.placeholder.com/400x200"class="img-fluid" alt="la_mon_ou_mon_coeur">
             </div>       
