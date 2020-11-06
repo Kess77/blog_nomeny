@@ -1,4 +1,21 @@
 @import "~bootstrap/scss/bootstrap";
 body {
-    background-color: lightgray;
+    background-color: #ffffff!important;
+    h3{
+        font-family:Montserrat ;
+        font-size: 1rem; 
+    }
+    H2{
+        font-size: 1.5rem;
+
+    }
+    .comment_date{
+        font-size: 0.8rem;
+        font-style: oblique;
+    }
+}
+
+.nav-link{
+    font-family: Montserrat;
+    font-weight: bold;
 }

@@ -58,7 +58,7 @@ class AppFixtures extends Fixture
         for ( $i=0;$i<=20;$i++){
 
             $post = new Post();
-            $article = '<p>' .join('</p><p>',$faker->paragraphs(5)).'</p>';
+            $article = '<p>' .join('</p><p>',$faker->paragraphs(2)).'</p>';
             $user = $users[mt_rand(0,count($users)-1)];
 
             $post   ->setTitle($faker->sentence(4))
