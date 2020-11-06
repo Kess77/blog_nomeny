@@ -192,12 +192,21 @@ class User implements UserInterface
      */
     public function getRoles(): array
     {
-       // $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-       // $roles[] = 'ROLE_USER';
+       // $roles = $this->userRoles->toArray();
+       // dd($roles);
+
+        // transformer les tableaux des roles en string 
+        $roles = $this->userRoles->map(function($role){
+            return $role->getTitle;
+        })->toArray();
+        // Ajouter dans la bdd les roles 
+        $roles[] = 'ROLE_USER';
+
+        return $roles;
+       
 
         //return array_unique($roles);
-        return[ 'ROLE_USER'];
+        //return[ 'ROLE_USER'];
     }
 
     public function setRoles(array $roles): self

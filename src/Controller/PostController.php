@@ -2,13 +2,14 @@
 
 namespace App\Controller;
 
-use App\Entity\Image;
 use App\Entity\Post;
+use App\Entity\Image;
 use App\Form\PostType;
 use App\Repository\PostRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class PostController extends AbstractController
@@ -32,6 +33,7 @@ class PostController extends AbstractController
      * Permet de créer des articles ou d'ajouter, lier avec des formulaires
      * 
      * @Route("posts/new",name="post_create")
+     * @IsGranted("ROLE_USER")
      *
      * @return Response
      */
@@ -79,6 +81,7 @@ class PostController extends AbstractController
      * Permet d'afficher le formulaire d'edition pour pouvoir modifier 
      *
      * @Route("posts/{slug}/edit",name="post_edit")
+     * @Security(is_granted('ROLE_USER')and user===post.getAuthor()",message="Interdiction de modifier cette article")
      * 
      * @return Response
      */
