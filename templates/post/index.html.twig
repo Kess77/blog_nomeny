@@ -15,10 +15,7 @@
                     <img src="{{ post.coverImage }}" alt="" >
                 </a>
                     <div class="text-center">
-                        <h3 class="mt-4">Deco</h3>
-                        <h2 >{{post.title}}</h2>
-                        <p class=" comment_date"> {{post.createdAt | date('d-m-Y')}} -  <em>commentaires</em></p>
-                        <p >{{post.article | raw }}</p>  
+                         {% include "_titlePost.html.twig" %}
                         <a href="{{url}}">
                             <div class="btn btn-warning">Lire la suite</div>
                         </a>
