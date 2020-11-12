@@ -21,14 +21,14 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class AccountController extends AbstractController
 {
     /**
-     * Permet de se connecter au formulaire de connexion 
+     * Permet de se connecter au formulaire de connexion et gerer les erreurs 
      * @Route("/login", name="account_login")
      * 
      * @return Response
      */
     public function login(AuthenticationUtils $utils)
     {
-        $error =$utils->getLastAuthenticationError();
+        $error = $utils->getLastAuthenticationError();
 
         // recuperer le dernier nom
         $username = $utils->getLastUsername();
@@ -36,7 +36,7 @@ class AccountController extends AbstractController
 
         return $this->render('account/login.html.twig',[
             'hasError'=> $error !== null,
-            'username'=>$username
+            'username'=> $username
         ]    
         );
     }

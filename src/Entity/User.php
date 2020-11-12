@@ -203,7 +203,7 @@ class User implements UserInterface
 
         // transformer les tableaux des roles en string 
         $roles = $this->userRoles->map(function($role){
-            return $role->getTitle;
+            return $role->getTitle();
         })->toArray();
         // Ajouter dans la bdd les roles 
         $roles[] = 'ROLE_USER';

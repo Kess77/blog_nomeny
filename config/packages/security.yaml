@@ -16,6 +16,7 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+            
         admin:
             pattern: ^/admin
             anonymous: true 
@@ -27,7 +28,7 @@ security:
                 check_path: admin_account_login
 
             logout:
-                path: account_logout
+                path: admin_account_logout
                 target: homepage
 
 
