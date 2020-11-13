@@ -14,7 +14,7 @@ const $ = require('jquery');
 
 
 // create global $ and jQuery variables
-// global.$ = global.jQuery = $;
+ global.$ = global.jQuery = $;
 
 require('bootstrap');
 

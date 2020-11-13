@@ -1,4 +1,5 @@
 {% extends 'admin/base.html.twig' %}
+{% form_theme form _self %}
 
 {% block title %}Modification de l'article {{post.id}}{% endblock %}
 
@@ -9,8 +10,51 @@
         {{form_start(form)}}
 
         {{form_widget(form)}}
+
+        <button type="submit" class="btn btn-warning">Enregistrer les Modifications</button>
         
         {{form_end(form)}}
     </div>
 
+{% endblock %}
+
+{# gerer les block d'images #}
+
+{% block _post_images_widget %}
+    {{form_widget(form)}}
+{% endblock %}
+
+{% block _post_images_entry_row %}
+    <div id="block_{{id}}">
+         {{form_widget(form)}}
+    </div>
+{% endblock %}
+
+{% block _post_images_entry_widget %}
+    <div class="row align-items-center my-2">
+        <div class="col-4">
+            {% if value %}
+            <img src="{{value.url}}" alt="" class="container-fluid">
+            {% endif %}
+        </div>
+        <div class="col-6">
+            {{form_row(form.caption)}}
+        </div>
+        <div class="col-2">
+            <button type="button" class="btn btn-danger my-1" data-action="delete" data-target="#block_{{id}}" ><i class="fas fa-trash"></i></button>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+
+    <script>
+        $(document).ready(function(){
+            $('[data-action = "delete"]').on('click',function(){
+                const target = this.dataset.target;
+                $(target).remove();
+               
+            });
+        });
+    </script>
 {% endblock %}
