@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin/base.html.twig' %}
 
 {% block title %}Administration des commentaires{% endblock %}
 
@@ -25,8 +25,8 @@
                 <td>{{comment.content}}</td>
                 <td>{{comment.post.title}}</td>
                 <td>
-                    <a href=""  class="btn btn-primary"><i class="fas fa-pencil"></i></a>
-                    <a href=""  class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                    <a href="{{path('admin_comment_edit')}}"  class="btn btn-primary"><i class="fas fa-pencil"></i></a>
+                    <a href="{{path('admin_comment_delete')}}"  class="btn btn-danger"><i class="fas fa-trash"></i></a>
                 </td>   
             </tr>
         {% endfor %}

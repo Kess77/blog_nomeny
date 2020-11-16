@@ -1,0 +1,18 @@
+{% extends 'admin/base.html.twig' %}
+{% block title %} Modification du commentaire : {{comment.id}}{% endblock %}
+{% block body %}
+    <div class="container">
+        <h3>gestion de commentaires</h3>
+   
+        {{form_start(form)}}
+
+        {{form_widget(form)}}
+
+        <button type="submit" class="btn btn-primary">
+            <i class="fas fa-check"></i>
+            Enregistrer 
+        </button>
+        {{form_end(form)}}
+    </div>
+
+{% endblock %}
