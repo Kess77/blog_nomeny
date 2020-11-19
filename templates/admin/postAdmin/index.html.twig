@@ -31,7 +31,8 @@
                 </tr>
             {% endfor %}
             </tbody>
-
         </table>
+        {# gerer la pagination #}
+         {% include "admin/partials/pagination.html.twig" with {'route':'admin_post_index'} %}
     </div>
 {% endblock %}
