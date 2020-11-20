@@ -52,7 +52,7 @@ class Post
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\Length(min=20, minMessage="Le titre doit faire plus de 20 caractères")
+     * @Assert\Length(min=40, minMessage="Le titre doit faire plus de 40 caractères")
      */
     private $introduction;
 

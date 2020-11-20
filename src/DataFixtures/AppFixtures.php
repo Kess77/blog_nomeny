@@ -86,7 +86,7 @@ class AppFixtures extends Fixture
                     ->setCreatedAt($faker->dateTime)
                     ->setArticle($article)
                     ->setAuthor($user)
-                    ->setIntroduction($faker->sentence())
+                    ->setIntroduction($faker->sentence(19))
                     ;
             
             // Gérer les images 

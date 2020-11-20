@@ -29,7 +29,7 @@ class AdminCommentController extends AbstractController
         ]);
     }
     /**
-     * Permet de modifier les articles 
+     * Permet de editer les commentaires 
      * 
      * @Route("/admin/comment/{id}/edit", name ="admin_comment_edit")
      *

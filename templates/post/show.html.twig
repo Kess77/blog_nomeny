@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}la page:{% endblock %}
+{% block title %}{{post.title}}{% endblock %}
 
 {% block body %}
 {# Affichage des articles #}
 <div class="container"> 
         <div class="row ">
             <div class="col-md-8 my-3">
-                <img src="{{ post.coverImage }}" alt="la_mon_ou_mon_coeur" >
+                <img src="{{ post.coverImage }}" alt="la_mon_ou_mon_coeur" class="rounded mx-auto d-block img-thumbnail" >
                  {% include "post/_titlePost.html.twig" %}
 
                    {# Mise en place de carroussel #}
@@ -29,6 +29,10 @@
                     </a>
                 </div>          
             </div>
+            {# Affichages des blocks à propos #}
+            <div class="col-md-4 my-2">
+                <img src="https://via.placeholder.com/400x200"class="img-fluid" alt="la_mon_ou_mon_coeur">
+            </div>    
             {# Mis en place des commentaires#}
                 {% if post.comments | length > 0 %}
                     <h3 class="mb-3">commentaires</h3>
@@ -41,10 +45,7 @@
                 {% else %}
                     <h3>Pas de commentaires</h3>
                 {% endif %}
-            {# A propos #}
-            <div class="col-4 my-2">
-                <img src="https://via.placeholder.com/400x200"class="img-fluid" alt="la_mon_ou_mon_coeur">
-            </div>       
+               
         </div>
          
 </div>
