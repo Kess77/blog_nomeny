@@ -17,16 +17,16 @@ class ContactType extends ApplicationType
         $builder
             ->add('firstName',
                 TextType::class,
-                $this->getConfiguration('Nom','Votre nom'))
+                $this->getConfiguration('Nom'))
             ->add('lastName',
                 TextType::class,
-                $this->getConfiguration('Prénom','Votre prénom'))
+                $this->getConfiguration('Prénom'))
             ->add('email',
             EmailType::class,
-            $this->getConfiguration('email','Votre email'))
+            $this->getConfiguration('email'))
             ->add('comments',
             TextType::class,
-            $this->getConfiguration('Sujet','Votre demande'))
+            $this->getConfiguration('Sujet'))
         ;
     }
 
