@@ -1,20 +1,18 @@
  {% set url = path('post_show',{'slug':post.slug})%}
-         {% if url != url %}
+       
       <div class="text-center">
             <h3 class="mt-4">Deco</h3>
             <h2 >{{post.title}}</h2>
             <p class=" comment_date"> {{post.createdAt | date('d-m-Y')}} -  <em>commentaires</em></p>
             <p >{{post.article | raw }}</p>
-            <a href="{{url}}">
-               <div class="btn btn-warning ">Lire la suite</div>
-            </a>  
+
+           
+            <a href="{{url}}" > 
+               <div class="btn btn-primary  ">Lire la suite</div>
+            </a>
+             
          </div>
-         {% else %} 
-         <div class="text-center">
-            <h3 class="mt-4">Deco</h3>
-            <h2 >{{post.title}}</h2>
-            <p class=" comment_date"> {{post.createdAt | date('d-m-Y')}} -  <em>commentaires</em></p>
-            <p >{{post.article | raw }}</p>
-      </div>
-      {% endif %}
+         
+   
+      
    

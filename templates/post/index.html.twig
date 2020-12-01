@@ -7,23 +7,23 @@
 <div class="container">
     <div class="row ">
         {% for post in posts %} 
+        <div class="col-md-8 my-4">
             {% set url = path('post_show',{'slug':post.slug})%}
-         <div class="col-8 my-4">
             <a href="{{url}}">
-                 <img src="{{ post.coverImage }}" alt="" class="rounded mx-auto d-block img-thumbnail" >
+                <img src="{{ post.coverImage }}" alt="" class="rounded mx-auto d-block img-thumbnail" >
             </a>
-            {# Affichage des block de titre #}        
-            {% include "post/_titlePost.html.twig" %}
-          
+         {# Affichage des block de titre #}        
+            {% include "post/_titlePost.html.twig" %}  
         </div>
-        {% endfor %} 
-            {# Affichages des blocks à propos #}
-        <div class="col-4 ">
+        {# Affichages des blocks à propos #} 
+        {% if loop.first %}
+        <div class="col-md-4 my-4 ">
             <a href="{{ path('homepage_show')}}">
-                <img src="https://via.placeholder.com/400x500"class="img-fluid rounded mx-auto" alt="la_mon_ou_mon_coeur">
-            </a>
-            <p class="my-3 text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate mollitia maiores neque quasi obcaecati aliquam, voluptatibus recusandae et velit assumenda molestiae, laborum explicabo ad similique veniam sit porro eos quaerat.</p>
+                 <img src="https://via.placeholder.com/400x500"class="img-fluid rounded mx-auto" alt="la_mon_ou_mon_coeur">
+            </a>  
         </div> 
+        {% endif %}
+        {% endfor %}     
     </div>
 </div>
 {% endblock %}

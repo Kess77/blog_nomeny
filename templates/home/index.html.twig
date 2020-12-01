@@ -4,19 +4,25 @@
     <div class="container">
         <div class="row flex">
       
-        {% for post in posts %}
-        
-            
+        {% for post in posts %} 
             <div class="col-8 my-2">
                 <img src="{{post.coverImage}}"class="rounded mx-auto d-block img-thumbnail" alt="{{post.slug}}">
-                 {% include "post/_titlePost.html.twig" %} 
+            {# Affichage des block de titre #} 
+                {% include "post/_titlePost.html.twig" %} 
             </div>
-        {% endfor %}
-           
-            <div class="col-4 my-2">
+        {# Affichages des blocks à propos #} 
+            {% if loop.first %}   
+            <div class="col-4 my-2 justify-content-start">
                 <img src="https://via.placeholder.com/400x200"class="img-fluid" alt="">
 
             </div>
+            {% endif %}
+        {% endfor %}
         </div>
     </div>
  {% endblock %}
+
+
+
+
+ 

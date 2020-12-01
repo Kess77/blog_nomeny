@@ -5,7 +5,8 @@
         <meta name="viewport" content="width=device-width, user-scalable=no">
         <title>{% block title %}Welcome!{% endblock %}</title>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
-        {% block stylesheets %}{{ encore_entry_link_tags('app') }}{% endblock %}
+        {{ encore_entry_link_tags('app') }}
+        {% block stylesheets %}{% endblock %}
     </head>
     <body>
         {% include 'partials/header.html.twig'%}
@@ -14,9 +15,10 @@
         
 
         {% include 'partials/footer.html.twig'%}
+        {{ encore_entry_script_tags('app') }}
         {% block javascripts %}
         
-        {{ encore_entry_script_tags('app') }}
+        
         {% endblock %}
     </body>
 </html>

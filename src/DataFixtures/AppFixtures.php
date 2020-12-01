@@ -82,7 +82,7 @@ class AppFixtures extends Fixture
             $user = $users[mt_rand(0,count($users)-1)];
 
             $post   ->setTitle($faker->sentence(4))
-                    ->setCoverImage($faker->imageUrl())
+                    ->setCoverImage($faker->imageUrl(895,470))
                     ->setCreatedAt($faker->dateTime)
                     ->setArticle($article)
                     ->setAuthor($user)
@@ -93,7 +93,7 @@ class AppFixtures extends Fixture
             for($j=1;$j<=mt_rand(1,2);$j++){
                 $image = new Image();
 
-                $image  ->setUrl($faker->imageUrl())
+                $image  ->setUrl($faker->imageUrl(895,470))
                         ->setCaption($faker->sentence(2))
                         ->setPost($post);
 

@@ -23,10 +23,10 @@ class ContactType extends ApplicationType
                 $this->getConfiguration('Prénom'))
             ->add('email',
             EmailType::class,
-            $this->getConfiguration('email'))
+            $this->getConfiguration('Email'))
             ->add('comments',
             TextType::class,
-            $this->getConfiguration('Sujet'))
+            $this->getConfiguration('Votre message'))
         ;
     }
 

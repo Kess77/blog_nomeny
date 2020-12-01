@@ -1,23 +1,79 @@
-@import "~bootstrap/scss/bootstrap";
-body {
-    background-color: #ffffff!important;
-    h3{
-        font-family:Montserrat ;
-        font-size: 1rem; 
-    }
-    H2{
-        font-size: 1.5rem;
 
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;1,300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Montserrat:ital,wght@0,400;0,600;1,300&display=swap');
+
+
+
+
+// gerer les couleurs des boutons
+$theme-colors: (
+  "primary"     :#191919 ,
+  "danger"      : #d19490,
+  "success"     :  rgb(154, 207, 185),
+  "warning"     : rgb(243, 236, 236)
+);
+@import "~bootstrap/scss/bootstrap";
+$black:#191919;
+$gold :#a38b5d;
+$white:#FFF;
+// les variables 
+$font-size-regular: 1rem;
+$font-size-small  : 0.85rem;
+$font-size-big    : 2rem;
+
+$font-family-nav  : 'montserrat',Arial,sans-serif;
+$font-family-bold :  bold !important;
+
+//les mixins 
+@mixin font($fontFamily,$fontWeight) {
+    font-family: $fontFamily;
+    font-weight: $fontWeight;   
+}
+
+
+
+nav{
+    .nav-link{
+        font-family: $font-family-nav;
+        font-weight: bold !important;
+        @include font($font-family-nav,$font-family-bold);
+    }
+}
+.text-center{
+    h3{
+        @include font($font-family-nav,$font-family-bold);
+        font-size  : $font-size-small;
+        color      : $gold;
+    }
+    h2{
+        color :$black ;
     }
     .comment_date{
-        font-size: 0.8rem;
-        font-style: oblique;
+        color       : lighteen($black,30%);
+        font-style  : italic;
+        font-size   : $font-size-small;
+    }
+    p{
+        color: lighteen($black,40%);
+        font-family: 'Lato', Arial, Helvetica, sans-serif;
+    
+    }
+    .btn{
+        font-size    :$font-size-small;
+        border-radius:1.3rem;
+    }
+    
+    em{
+        color:$gold;
     }
 }
 
 
-.nav-link{
-    font-family: Montserrat;
-    font-weight: bold;
 
-}
+
+
+
+
+
+
+

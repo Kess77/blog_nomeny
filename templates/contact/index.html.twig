@@ -4,11 +4,26 @@
 
 {% block body %}
     <div class="container">
-    
-        {{form_start(form)}}
-        {{form_widget(form)}}
-        <button type="submit" class="btn btn-warning">Envoyer</button>
-        {{form_end(form)}}
+       <div class="row ">
+        <div class="col-6 text-center my-4">
+            <H2>Rafenoarivo Nomeny</H2>
+            <p><i class="fas fa-envelope-open-text"></i> 3, allée des tilliers</p>
+            <p> 93100 Montreuil</p>
+            <div >
+                <H2>Social Media</H2>
+                <p><i class="fas fa-at"></i> ra_nomeny@yahoo.fr</p>
+                <p><i class="fab fa-instagram-square"></i> Instagarm</p>   
+            </div>
+        </div>
+        <div class="col-6 ">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2625.0881360626504!2d2.4603390156732305!3d48.85652970879178!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e612abd5c7e2ad%3A0xe6b9af854ed3ef0c!2s3%20All%C3%A9e%20des%20Tilliers%2C%2093100%20Montreuil!5e0!3m2!1sfr!2sfr!4v1606124717003!5m2!1sfr!2sfr" width="400" height="300" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+        </div>
+       </div>
+
+        {# formulaire de contact #}
+         {% include "partials/contactForm.html.twig" %}
+        
+        
     </div>
 
 
