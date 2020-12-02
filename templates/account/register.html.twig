@@ -3,12 +3,22 @@
 {% block title %}Page d'inscription {% endblock %}
 
 {% block body %}
+   
     <div class="container my-5">
-    <h1>Inscrivez-vous </h1>
-        {{form_start(form)}}
-        {{form_widget(form)}}
-        <button type="submit" class="btn btn-success">Valider</button>
-        {{form_end(form)}}
+        <div class="row">
+            <div class="col-md-3">&nbsp;</div>
+            <div class="col-md-6">
+                <div class="bg-light py-3 px-3">
+                    <h1 class="h2 my-4 mx-3 text-center">Inscrivez-vous </h1>
+                    <div class="card-body  mx-3">                       
+                        {{form_start(form)}}
+                        {{form_widget(form)}}
+                        <button type="submit " class="btn btn-success btn-block">Valider</button>
+                        {{form_end(form)}}
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 {% endblock %}

@@ -32,11 +32,7 @@ class RegistrationType extends ApplicationType
                 EmailType::class,
                 $this->getConfiguration('Email')
                 )
-            ->add(
-                'avatar',
-                UrlType::class,
-                $this->getConfiguration('Photo de profil')
-                )
+            
             ->add(
                 'password',
                 PasswordType::class,

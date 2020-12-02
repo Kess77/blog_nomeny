@@ -9,7 +9,7 @@
 $theme-colors: (
   "primary"     :#191919 ,
   "danger"      : #d19490,
-  "success"     :  rgb(154, 207, 185),
+  "success"     :  rgb(169, 202, 188),
   "warning"     : rgb(243, 236, 236)
 );
 @import "~bootstrap/scss/bootstrap";
@@ -31,7 +31,7 @@ $font-family-bold :  bold !important;
 }
 
 
-
+// la barre de menu 
 nav{
     .nav-link{
         font-family: $font-family-nav;
@@ -39,6 +39,7 @@ nav{
         @include font($font-family-nav,$font-family-bold);
     }
 }
+// les blocs de titre 
 .text-center{
     h3{
         @include font($font-family-nav,$font-family-bold);
