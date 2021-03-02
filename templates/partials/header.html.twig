@@ -3,56 +3,57 @@
     <div class="row">
         <div class="col"></div>
         <div class="col">
-            <img src="images/butterfly-with-heart-on-frontal-wing-on-side-view.png" alt="La_ou_mon_coeur">
-            
+            <img src="images/logo.png" width="200" height="400" alt="La_ou_mon_coeur">      
         </div>
         <div class="col"></div>
     </div>
     
-    <nav class="navbar navbar-expand-lg navbar-light bg-default border border-right-0 border border-left-0 my-5 ">
+    <nav class="navbar navbar-expand-xl navbar-light bg-default border border-right-0 border border-left-0 my-5 ">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample10" aria-controls="navbarsExample10" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
 
-    <div class="collapse navbar-collapse ml-5 justify-content-between" id="navbarsExample10">
-      <ul class="navbar-nav ">
-          <li class="nav-item active">
-            <a class="nav-link pr-5" href="{{path('homepage')}}">Accueil <span class="sr-only">(current)</span></a>
-          </li>
-          <li class="nav-item ">
-            <a class="nav-link pr-5" href="{{path('post_index')}}">Blog</a>
-          </li>
-          <li class="nav-item  ">
-            <a class="nav-link pr-5" href="{{path('homepage_show')}}">A propos </a>
-          </li>
-          <li class="nav-item ">
-            <a class="nav-link pr-5" href="{{path('contact_index')}}">Contact</a>
-          </li>
-          
+        <div class="collapse navbar-collapse ml-5 justify-content-between" id="navbarsExample10">
+            <ul class="navbar-nav navbar-expand{-md|-lg}  ">
+                <li class="nav-item active">
+                    <a class="nav-link pr-5" href="{{path('homepage')}}">Accueil <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link pr-5" href="{{path('post_index')}}">Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link pr-5" href="{{path('homepage_show')}}">A propos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link pr-5" href="{{path('contact_index')}}">Contact</a>
+                </li>
+                
 
-          <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="dropdown10" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Connexion</a>
-              <div class="dropdown-menu" aria-labelledby="dropdown10">
-              {# gerer l'affichage si on est connecté ou deconnecté #}
-                {% if app.user %}
-                      <a class="dropdown-item " href="{{path('account_logout')}}" tabindex="-1" >Deconnexion</a>
-                {% else %}
-                 
-                      <a class="dropdown-item " href="{{path('account_register')}}" tabindex="-1" >Inscription</a>
-                  
-                      <a class="dropdown-item " href="{{path('account_login')}}" tabindex="-1">Connexion</a>
-                 
-                {% endif %}
-                    {#<a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>#}  
-              </div>
-          </li>
-          {# barre de recherche#}
-      </ul>
-          <form class="form-inline my-2 my-lg-0">
-                <input class="form-control ml-5 " type="search" placeholder="Search..." aria-label="Search">
-                <button class="btn btn-outline-custom my-2 my-sm-0" type="submit">Search</button> 
-          </form>
-    </div>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdown10" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Connexion</a>
+                    <div class="dropdown-menu" aria-labelledby="dropdown10">
+                    {# gerer l'affichage si on est connecté ou deconnecté #}
+                        {% if app.user %}
+                            <a class="dropdown-item " href="{{path('account_logout')}}" tabindex="-1" >Deconnexion</a>
+                        {% else %}
+                        
+                            <a class="dropdown-item " href="{{path('account_register')}}" tabindex="-1" >Inscription</a>
+                        
+                            <a class="dropdown-item " href="{{path('account_login')}}" tabindex="-1">Connexion</a>
+                        
+                        {% endif %}
+                            {#<a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>#}  
+                    </div>
+                </li>
+                {# barre de recherche#}
+            </ul>
+            
+            <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control ml-5 " type="search" placeholder="Search..." aria-label="Search">
+                    <button class="btn btn-outline-custom my-2 my-sm-0" type="submit">Search</button> 
+            </form>
+            
+        </div>
   </nav>
   
 </div>

@@ -7,6 +7,7 @@ use App\Form\ProfilType;
 use App\Entity\UpdatePassword;
 use App\Form\RegistrationType;
 use App\Form\UpdatePasswordType;
+use App\Repository\RoleRepository;
 use Symfony\Component\Form\FormError;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -57,7 +58,7 @@ class AccountController extends AbstractController
      *
      * @return Response
      */
-    public function register(Request $request,EntityManagerInterface $manager,UserPasswordEncoderInterface $encoder)
+    public function register(Request $request,EntityManagerInterface $manager,UserPasswordEncoderInterface $encoder,RoleRepository $roleRepository)
     {
 
         $user = new User();
@@ -71,6 +72,11 @@ class AccountController extends AbstractController
             $hash = $encoder->encodePassword($user,$user->getPassword());
             $user->setPassword($hash);
 
+            // Attibuer les roles aux utilisateurs qui s'inscrivent 
+            $role = $roleRepository->findOneBy(['title' => 'ROLE_USER']);
+            if($role){
+                $user->addUserRole($role);
+            }
 
             $manager->persist($user);
             $manager->flush();
@@ -89,7 +95,7 @@ class AccountController extends AbstractController
 
     }
     /**
-     * Permet  d'affichet et de  traiter le formulaire de modification de profil 
+     * Permet  d'afficher et de  traiter le formulaire de modification de profil 
      * 
      * @Route("/account/profil",name="account_profil")
      * @IsGranted("ROLE_USER")

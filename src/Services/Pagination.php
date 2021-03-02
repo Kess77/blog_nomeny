@@ -40,7 +40,7 @@ class Pagination  {
     // la fonction va appeler les données 
     public function getData(){
         // - Calculer offset
-         $offset  = $this->curentPage * $this->limit - $this->limit;
+         $offset  = $this->currentPage * $this->limit - $this->limit;
 
         // - Demander au repository de trouver les elements
         $repo  = $this->manager->getRepository($this->entityClass);

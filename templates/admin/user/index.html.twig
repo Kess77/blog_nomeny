@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User index{% endblock %}
+
+{% block body %}
+    <h1>Utilisateurs</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+              
+                <th>FirstName</th>
+                <th>LastName</th>
+                <th>Email</th>
+                <th>Rôles</th>
+                <th>actions</th>
+
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+               
+                <td>{{ user.firstName }}</td>
+                <td>{{ user.lastName }}</td>
+                <td>{{ user.email }}</td>
+                <td>
+                {% for role in user.userRoles %}
+                    <span class="badge badge-primary">{{role.title }}</span>&nbsp;
+                {% endfor %}
+                </td>
+               
+                
+                <td>
+                    <a href="{{ path('admin_user_show', {'id': user.id}) }}" class="btn btn-success"><i class="fas fa-eye"></i></a>
+                    <a href="{{ path('admin_user_edit', {'id': user.id}) }}" class="btn btn-danger"><i class="fas fa-edit"></i></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('admin_user_new') }}" class="btn btn-danger mx-2"> Nouveau rôle</a>
+{% endblock %}

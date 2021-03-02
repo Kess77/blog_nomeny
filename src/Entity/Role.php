@@ -28,6 +28,11 @@ class Role
      * @ORM\ManyToMany(targetEntity=User::class, inversedBy="userRoles")
      */
     private $users;
+    
+    public function __toString()
+    {
+        return $this->title;
+    }
 
     public function __construct()
     {

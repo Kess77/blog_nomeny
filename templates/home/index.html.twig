@@ -5,16 +5,15 @@
         <div class="row flex">
       
         {% for post in posts %} 
-            <div class="col-8 my-2">
+            <div class="col-md-8 my-2">
                 <img src="{{post.coverImage}}"class="rounded mx-auto d-block img-thumbnail" alt="{{post.slug}}">
             {# Affichage des block de titre #} 
                 {% include "post/_titlePost.html.twig" %} 
             </div>
         {# Affichages des blocks à propos #} 
             {% if loop.first %}   
-            <div class="col-4 my-2 justify-content-start">
+            <div class="col-md-4 my-2 ">
                 <img src="https://via.placeholder.com/400x200"class="img-fluid" alt="">
-
             </div>
             {% endif %}
         {% endfor %}
