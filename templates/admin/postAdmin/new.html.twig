@@ -1,0 +1,52 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Nouveau Article{% endblock %}
+
+{% block body %}
+    <div class="container">
+        {% block _title %}
+            <h2>Nouveau Article</h2>
+        {% endblock %}
+
+        <div class="alert alert">
+            {{ form_errors(form) }}
+        </div>
+
+         {{ form_start(form) }}
+            <div class="row">
+              <div class="col-12">
+                    {{ form_row(form.categories)}}
+                </div>
+                <div class="col-12">
+                    {{ form_row(form.title)}}
+                </div>
+                 <div class="col-12 my-2">
+                    {{ form_row(form.introduction)}}
+                </div>
+                 <div class="col-12">
+                    {{ form_row(form.article)}}
+                </div>
+                 <div class="col-12 my-2">
+                    {{ form_row(form.coverImage)}}
+                </div>
+                  <div class="col-12 my-2">
+                    <div class="row">
+                        <div class="col-3">
+                             {{ form_row(form.imageFirst)}}
+                        </div>
+                         <div class="col-3">
+                             {{ form_row(form.imageSecond)}}
+                        </div>
+                         <div class="col-3">
+                             {{ form_row(form.imageLast)}}
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-success">Enregistrer</button>
+        {{form_end(form)}}
+    </div>
+
+{% endblock %}

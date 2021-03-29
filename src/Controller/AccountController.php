@@ -83,10 +83,10 @@ class AccountController extends AbstractController
 
             $this->addFlash(
                 'success',
-                'Votre compte a été bien enregistré'
+                'Votre compte a été bien enregistré, veuillez vous connecter '
             );
 
-            $this->redirectToRoute("account_login");
+            return $this->redirectToRoute("account_login");
         }
         
         return $this->render('account/register.html.twig',[

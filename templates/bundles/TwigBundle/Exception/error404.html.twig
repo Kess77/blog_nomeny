@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page d'erreur{% endblock %}
+
+{% block body %}
+    <div class="container">
+        
+        <P><strong> Nous sommes désolés </strong>, la page que vous cherchez n'a pas été trouvée </P>
+        <a href="{{ path('homepage')}}" class="btn btn-danger">Retour à l'accueil</a>
+    </div>
+{% endblock %}

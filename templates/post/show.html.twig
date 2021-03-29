@@ -7,33 +7,54 @@
 <div class="container"> 
     <div class="row ">
         <div class="col-md-8 my-3">
-            <img src="{{ post.coverImage }}" alt="la_mon_ou_mon_coeur" class="rounded mx-auto d-block img-thumbnail" >
-            <div class="text-center">
-                <h3 class="mt-4">Deco</h3>
-                <h2 >{{post.title}}</h2>
-                <p class=" comment_date"> {{post.createdAt | date('d-m-Y')}} -  <em>commentaires</em></p>
-                <p >{{post.article | raw }}</p>
-            </div>
                    {# Mise en place de carroussel #}
             <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
-                    {% for image in post.images %}
-                        <div class="carousel-item {% if loop.first %} active {% endif %}">
-                            <img src="{{image.url}}" class="d-block w-100" alt="...">
+                    {% if post.imageFirst %}
+                        <div class="carousel-item active">
+                                <img src="{{ vich_uploader_asset(post.imageFirst, 'imageFile') }}" alt="{{post.title}}" height="377" width="1200" class="d-block w-100">
+                        
                         </div>
-                    {% endfor %}    
+                     {% endif %}
+                     {% if post.imageSecond %}
+                     <div class="carousel-item {{ not post.imageFirst ? 'active' }}">
+                         <img src="{{ vich_uploader_asset(post.imageSecond, 'imageFile') }}" alt="{{post.title}}" height="377" width="1200" class="d-block w-100">
+                    </div>
+                     {% endif %}
+                     {% if post.imageLast %}
+                        <div class="carousel-item {{ not post.imageFirst and not post.imageSecond ? 'active' }}">
+                            
+                                <img src="{{ vich_uploader_asset(post.imageLast, 'imageFile') }}" alt="{{post.title}}" height="377" width="1200" class="d-block w-100">
+                        </div>
+                     {% endif %}
                 </div>
-                <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
+                    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
             </div>  
+
+            <div class="text-center">
+                <h1 class="h3 mt-4">
+                   {% for category  in post.categories %}
+                        <a href="{{path('post_show_categorie', { id : category.id})}}"              class="link_title" >
+                        {{ category.name }} 
+                        </a>     
+                    {% endfor %}
+                </h1>
+                <h2 >{{post.title}}</h2>
+                <p class=" comment_date"> {{post.createdAt | date('d-m-Y')}}</p>
+                <p >{{ post.article|raw }}</p>
+            </div>
+            {% if post.coverImage %}
+                <img src="{{ vich_uploader_asset(post.coverImage, 'imageFile') }}" alt="" height="377" width="1200" class="rounded mx-auto d-block img-thumbnail">
+            {% endif %}
             {# Mis en place des commentaires#}
-                {% if post.comments | length > 0 %}
+                {# {% if post.comments | length > 0 %}
                     <h3 class="mb-3">commentaires</h3>
                     {% for comment in post.comments %}
                         <div class="bg-light rounded mb-3 py-3 px-3">
@@ -43,11 +64,11 @@
                     {% endfor %}
                 {% else %}
                     <h3>Pas de commentaires</h3>
-                {% endif %}        
+                {% endif %}         #}
         </div>
             {# Affichages des blocks à propos #}
-        <div class="col-md-4 my-2">
-            <img src="https://via.placeholder.com/400x200"class="img-fluid" alt="la_mon_ou_mon_coeur">
+        <div class="col-md-4">
+              {% include "post/_asidePost.html.twig" %}
         </div>             
     </div>        
 </div>

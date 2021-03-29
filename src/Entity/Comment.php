@@ -6,10 +6,10 @@ use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\PrePersist;
 use App\Repository\CommentRepository;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass=CommentRepository::class)
- * @ORM\HasLifecycleCallBacks()
  */
 class Comment
 {
@@ -21,6 +21,7 @@ class Comment
     private $id;
 
     /**
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
@@ -35,17 +36,6 @@ class Comment
      * @ORM\JoinColumn(nullable=false)
      */
     private $post;
-    /**
-     * Permet de mettre en place la date de création 
-     * @ORM\PrePersist
-     *
-     * @return void
-     */
-    public function prePersist(){
-        if(empty($this->createdAt)){
-            $this->createdAt = new \DateTime();
-        }    
-    }
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="comments")

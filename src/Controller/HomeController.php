@@ -12,6 +12,8 @@ use Symfony\Component\HttpFoundation\Request;
 class HomeController extends AbstractController
 {
     /**
+     * Permet d'afficher la page d'accueil 
+     * 
      * @Route("/", name="homepage")
      */
     public function index(PostRepository $postRepo)
@@ -23,12 +25,12 @@ class HomeController extends AbstractController
         ]);
     }
     /**
+     * Permet d'afficher la page à propos 
      * @Route("/show",name="homepage_show")
      */
 
-     public function show (){
-        
-
+     public function show ()
+     {
         return $this->render('home/show.html.twig');
      }
 }

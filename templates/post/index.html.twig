@@ -1,29 +1,27 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Blog{% endblock %}
+{% block title %}Les articles de blogs {% endblock %}
 
 {% block body %}
 
 <div class="container">
     <div class="row ">
-        {% for post in posts %} 
         <div class="col-md-8 my-4">
-            {% set url = path('post_show',{'slug':post.slug})%}
-            <a href="{{url}}">
-                <img src="{{ post.coverImage }}" alt="" class="rounded mx-auto d-block img-thumbnail" >
-            </a>
-         {# Affichage des block de titre #}        
-            {% include "post/_titlePost.html.twig" %}  
-        </div>
-        {# Affichages des blocks à propos #} 
-        {% if loop.first %}
+            {% for post in posts %}
+                <div class="col-12 my-1"> 
+                {% if post.coverImage %}
+                    <img src="{{ vich_uploader_asset(post.coverImage, 'imageFile') }}" alt="{{post.title}}" height="377" width="1200" class="rounded mx-auto d-block img-thumbnail">
+                {% endif %}
+            {# Affichage des block de titre #}        
+                {% include "post/_titlePost.html.twig" %}  
+                </div>
+            {% endfor %}
+        </div>    
+        
+         {# Affichage du block à propos  #}
         <div class="col-md-4 my-4 ">
-            <a href="{{ path('homepage_show')}}">
-                 <img src="https://via.placeholder.com/400x500"class="img-fluid rounded mx-auto" alt="la_mon_ou_mon_coeur">
-            </a>  
+            {% include 'post/_asidePost.html.twig'%}
         </div> 
-        {% endif %}
-        {% endfor %}     
     </div>
 </div>
 {% endblock %}

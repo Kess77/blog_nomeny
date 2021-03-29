@@ -1,14 +1,14 @@
 <div class="container">
-  {# Titre & logo #}
-    <div class="row">
-        <div class="col"></div>
-        <div class="col">
-            <img src="images/logo.png" width="200" height="400" alt="La_ou_mon_coeur">      
+{# Titre & logo #}
+    <div class="row ">
+         <div class="col-md-4"></div> 
+        <div class="col-md-4">
+            <img src="{{ asset('images/logo_lcm.svg')}}" class="imagesLogo" alt="La_ou_mon_coeur">      
         </div>
-        <div class="col"></div>
+        <div class="col-md-4"></div>
     </div>
-    
-    <nav class="navbar navbar-expand-xl navbar-light bg-default border border-right-0 border border-left-0 my-5 ">
+ {# BARRE DE NAVIGATION #}  
+    <nav class="navbar navbar-expand-xl navbar-light bg-default border border-right-0 border border-left-0 my-0 ">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample10" aria-controls="navbarsExample10" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -32,7 +32,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="dropdown10" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Connexion</a>
                     <div class="dropdown-menu" aria-labelledby="dropdown10">
-                    {# gerer l'affichage si on est connecté ou deconnecté #}
+{# gerer l'affichage si on est connecté ou deconnecté #}
                         {% if app.user %}
                             <a class="dropdown-item " href="{{path('account_logout')}}" tabindex="-1" >Deconnexion</a>
                         {% else %}
@@ -41,29 +41,27 @@
                         
                             <a class="dropdown-item " href="{{path('account_login')}}" tabindex="-1">Connexion</a>
                         
-                        {% endif %}
-                            {#<a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>#}  
+                        {% endif %}          
                     </div>
                 </li>
-                {# barre de recherche#}
             </ul>
             
-            <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control ml-5 " type="search" placeholder="Search..." aria-label="Search">
-                    <button class="btn btn-outline-custom my-2 my-sm-0" type="submit">Search</button> 
-            </form>
-            
+ {# BARRE DE RECHERCHE  #}
+            <form class="form-inline my-2 my-lg-0" action="{{path('post_search')}}" method="GET">
+                    <input class="form-control ml-5 " type="search" placeholder="Article..." aria-label="Search" name="q" value="{{app.request.query.get('q')}}" >
+                    <button class="btn btn-outline-custom my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button> 
+            </form>    
         </div>
-  </nav>
-  
+    </nav>
 </div>
+
 {# gerer les annonces sur addflash #}
-        {% for label, messages in app.flashes %}
-            <div class="container my-3">
-                <div class="alert alert-{{label}}">
-                {% for message in messages %}
-                    <p>{{message| raw}}</p>
-                {% endfor %}
-                </div>
-            </div>
-        {% endfor %}
+{% for label, messages in app.flashes %}
+     <div class="container my-3">
+        <div class="alert alert-{{label}}">
+            {% for message in messages %}
+                <p>{{message| raw}}</p>
+            {% endfor %}
+        </div>
+    </div>
+{% endfor %}

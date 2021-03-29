@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\AsciiSlugger;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AdminPostController extends AbstractController
@@ -29,6 +30,59 @@ class AdminPostController extends AbstractController
             'page' => $page
         ]);
     }
+
+      
+    /**
+     * Permet ajouter un post 
+     * 
+     * @Route("/admin/post/new", name="admin_post_new")
+     *
+     * @return Response
+     */
+     public function new(Request $request, EntityManagerInterface $manager)
+    {
+        $post = new Post();
+        $form = $this->createForm(PostType::class, $post);
+
+          $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            /*
+            if ($post->getCoverImage()->getImageFile()) {
+                $post->getCoverImage()->setImageName($this->generateRandomString());
+            }
+            if ($post->getImageFirst()->getImageFile()) {
+                $post->getImageFirst()->setImageName($this->generateRandomString());
+            }
+            if ($post->getImageSecond()->getImageFile()) {
+                $post->getImageSecond()->setImageName($this->generateRandomString());
+            }
+        
+            if ($post->getImageLast()->getImageFile()) {
+                $post->getImageLast()->setImageName($this->generateRandomString());
+            }*/
+            $slugger = new AsciiSlugger();
+            $slug = $slugger->slug($post->getTitle());
+            $post->setSlug($slug);
+
+            $post->setAuthor($this->getUser());
+            $manager->persist($post);
+            $manager->flush();
+
+            $this->addFlash(
+                'success',
+                "l'annonce <strong>{$post->getTitle()}</strong> a été bien ajouté"
+            );
+
+            return $this->redirectToRoute('admin_post_index');
+
+        }
+        
+        return $this->render('admin/postAdmin/new.html.twig',[
+            'form' =>$form -> createView()
+       ]);
+    }
+
     /**
      * Permet modifier les posts 
      * 
@@ -41,8 +95,7 @@ class AdminPostController extends AbstractController
     {
         
         $form = $this->createForm(PostType::class,$post);
-
-          $form->handleRequest($request);
+        $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
 
@@ -54,6 +107,7 @@ class AdminPostController extends AbstractController
                 "l'annonce <strong>{$post->getTitle()}</strong> a été bien modifié"
             );
 
+            return $this->redirectToRoute('admin_post_index');
         }
         return $this->render('admin/postAdmin/edit.html.twig',[
             'post'=> $post,

@@ -18,4 +18,13 @@ const $ = require('jquery');
 
 require('bootstrap');
 
-console.log('Hello Webpack Encore! Edit me in assets/app.js');
+import 'select2';
+
+
+let input_select2 = $('.js-select2');
+input_select2.select2({
+    allowClear: true,
+    placeholder: input_select2.attr('placeholder'),
+
+});
+

@@ -1,14 +1,19 @@
-<div class="card my-3">
-    <div class="card-header">
-        <div class="card-body">
-            <div class="card-title">
-                 <H1 class="my-2">Contactez-nous</H1>
-                 <P>Pour me contacter, utilisez le formulaire ci-dessous. J'essayerai de vous répondre rapidement ! </P>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card my-3">
+            <div class="card-header">
+                <div class="card-body">
+                    <div class="card-title">
+                        <h1 class="my-2">Contactez-nous</h1>
+                        <P>Pour me contacter, utilisez le formulaire ci-dessous. J'essayerai de vous répondre rapidement ! </P>
+                    </div>
+                        {{form_start(form)}}
+                        {{form_widget(form)}}
+                        <button type="submit" class="btn btn-warning btn-block">Envoyer</button>
+                        {{form_end(form)}}
+                </div>
             </div>
-                {{form_start(form)}}
-                {{form_widget(form)}}
-                <button type="submit" class="btn btn-warning btn-block">Envoyer</button>
-                 {{form_end(form)}}
         </div>
     </div>
+
 </div>

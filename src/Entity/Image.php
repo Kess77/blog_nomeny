@@ -5,9 +5,12 @@ namespace App\Entity;
 use App\Repository\ImageRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=ImageRepository::class)
+ * @Vich\Uploadable
  */
 class Image
 {
@@ -20,64 +23,51 @@ class Image
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\Url()
      */
-    private $url;
+    private $imageName;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\Length(min = 10, minMessage="Le titre de l'image doit être 10 caractères")
+     * @Vich\UploadableField(mapping="post", fileNameProperty="imageName")
+     * 
+     * @var File|null
      */
-    private $caption;
+    private $imageFile;
+
+    public function setImageFile(?File $imageFile = null): void
+    {
+        $this->imageFile = $imageFile;
+
+        if (null !== $imageFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
 
     /**
-     * @ORM\ManyToOne(targetEntity=Post::class, inversedBy="images")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $post;
-
-   
+     * Get the value of imageFile
+     *
+     * @return  File|null
+     */ 
+    public function getImageFile()
+    {
+        return $this->imageFile;
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getUrl(): ?string
+    public function getImageName(): ?string
     {
-        return $this->url;
+        return $this->imageName;
     }
 
-    public function setUrl(string $url): self
+    public function setImageName(string $imageName): self
     {
-        $this->url = $url;
+        $this->imageName = $imageName;
 
         return $this;
     }
-
-    public function getCaption(): ?string
-    {
-        return $this->caption;
-    }
-
-    public function setCaption(string $caption): self
-    {
-        $this->caption = $caption;
-
-        return $this;
-    }
-
-    public function getPost(): ?Post
-    {
-        return $this->post;
-    }
-
-    public function setPost(?Post $post): self
-    {
-        $this->post = $post;
-
-        return $this;
-    }
-
-
 }

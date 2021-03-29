@@ -2,18 +2,16 @@
 
 namespace App\Entity;
 
-use Cocur\Slugify\Slugify;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\PostRepository;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=PostRepository::class)
- * @ORM\HasLifecycleCallbacks()
  * @UniqueEntity(
  * fields={"title"},
  * message="Une autre annonce possède déjà ce titre "
@@ -45,8 +43,7 @@ class Post
     private $createdAt;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\Url()
+     * @ORM\OneToOne(targetEntity=Image::class, cascade={"persist", "remove"})
      */
     private $coverImage;
 
@@ -55,8 +52,6 @@ class Post
      * @Assert\Length(min=40, minMessage="Le titre doit faire plus de 40 caractères")
      */
     private $introduction;
-
-    
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -69,11 +64,21 @@ class Post
      */
     private $article;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="post", orphanRemoval=true)
-     * @Assert\Valid()
+    /** 
+     * @ORM\OneToOne(targetEntity=Image::class, cascade={"persist", "remove"})
      */
-    private $images;
+    private $imageFirst;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Image::class, cascade={"persist", "remove"})
+     */
+    private $imageSecond;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Image::class, cascade={"persist", "remove"})
+     */
+    private $imageLast;
+    
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="posts")
@@ -93,32 +98,20 @@ class Post
 
     public function __construct()
     {
-        $this->images = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->categories = new ArrayCollection();
+        $this->createdAt = new DateTime();
     }
 
-    
-
-    /**
-     * fonction pour générer des slug à partir d'un titre
-     * 
-     * @ORM\PrePersist
-     * @ORM\PreUpdate
-     */
-    public function initializeSlug(){
-       if(empty($this->slug)){
-           $slugify = new Slugify();
-           $this->slug = $slugify->slugify($this->title);
-       }
-
+    public function __toString()
+    {
+        return $this->name;
     }
 
     public function getId(): ?int
     {
         return $this->id;
     }
-   
 
     public function getTitle(): ?string
     {
@@ -144,18 +137,6 @@ class Post
         return $this;
     }
 
-    public function getCoverImage(): ?string
-    {
-        return $this->coverImage;
-    }
-
-    public function setCoverImage(string $coverImage): self
-    {
-        $this->coverImage = $coverImage;
-
-        return $this;
-    }
-
     public function getIntroduction(): ?string
     {
         return $this->introduction;
@@ -167,8 +148,6 @@ class Post
 
         return $this;
     }
-
-    
 
     public function getSlug(): ?string
     {
@@ -194,33 +173,50 @@ class Post
         return $this;
     }
 
-    /**
-     * @return Collection|Image[]
-     */
-    public function getImages(): Collection
+    public function getCoverImage(): ?Image
     {
-        return $this->images;
+        return $this->coverImage;
     }
 
-    public function addImage(Image $image): self
+    public function setCoverImage(?Image $coverImage): self
     {
-        if (!$this->images->contains($image)) {
-            $this->images[] = $image;
-            $image->setPost($this);
-        }
+        $this->coverImage = $coverImage;
 
         return $this;
     }
 
-    public function removeImage(Image $image): self
+    public function getImageFirst(): ?Image
     {
-        if ($this->images->contains($image)) {
-            $this->images->removeElement($image);
-            // set the owning side to null (unless already changed)
-            if ($image->getPost() === $this) {
-                $image->setPost(null);
-            }
-        }
+        return $this->imageFirst;
+    }
+
+    public function setImageFirst(?Image $imageFirst): self
+    {
+        $this->imageFirst = $imageFirst;
+
+        return $this;
+    }
+
+    public function getImageSecond(): ?Image
+    {
+        return $this->imageSecond;
+    }
+
+    public function setImageSecond(?Image $imageSecond): self
+    {
+        $this->imageSecond = $imageSecond;
+
+        return $this;
+    }
+
+    public function getImageLast(): ?Image
+    {
+        return $this->imageLast;
+    }
+
+    public function setImageLast(?Image $imageLast): self
+    {
+        $this->imageLast = $imageLast;
 
         return $this;
     }
@@ -296,5 +292,5 @@ class Post
         return $this;
     }
 
-    
+   
 }

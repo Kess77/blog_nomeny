@@ -3,22 +3,62 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, user-scalable=no">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}La ou mon coeur est{% endblock %}</title>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
         {{ encore_entry_link_tags('app') }}
         {% block stylesheets %}{% endblock %}
+        {{ encore_entry_script_tags('app') }}
+        {% block javascripts %} {% endblock %}
+        
+       {# gerer la notification de cookies  #}
+        <script src="{{ asset('Tarteaucitron/tarteaucitron.js') }}"></script>
+        <script>
+            tarteaucitron.init({
+    	  "privacyUrl": "{{path('notice_mentions_legales')}}", /* Privacy policy url */
+
+    	  "hashtag": "#tarteaucitron", /* Open the panel with this hashtag */
+    	  "cookieName": "tarteaucitron", /* Cookie name */
+    
+    	  "orientation": "middle", /* Banner position (top - bottom) */
+       
+          "groupServices": true, /* Group services by category */
+                           
+    	  "showAlertSmall": true, /* Show the small banner on bottom right */
+    	  "cookieslist": true, /* Show the cookie list */
+                           
+          "closePopup": true, /* Show a close X on the banner */
+
+          "showIcon": true, /* Show cookie icon to manage cookies */
+          //"iconSrc": "", /* Optionnal: URL or base64 encoded image */
+          "iconPosition": "BottomRight", /* BottomRight, BottomLeft, TopRight and TopLeft */
+
+    	  "adblocker": false, /* Show a Warning if an adblocker is detected */
+                           
+          "DenyAllCta" : true, /* Show the deny all button */
+          "AcceptAllCta" : true, /* Show the accept all button when highPrivacy on */
+          "highPrivacy": true, /* HIGHLY RECOMMANDED Disable auto consent */
+                           
+    	  "handleBrowserDNTRequest": false, /* If Do Not Track == 1, disallow all */
+
+    	  "removeCredit": false, /* Remove credit link */
+    	  "moreInfoLink": true, /* Show more info link */
+
+          "useExternalCss": false, /* If false, the tarteaucitron.css file will be loaded */
+          "useExternalJs": false, /* If false, the tarteaucitron.js file will be loaded */
+
+    	  //"cookieDomain": ".my-multisite-domaine.fr", /* Shared cookie for multisite */
+                          
+          "readmoreLink": "", /* Change the default readmore link */
+
+          "mandatory": true, /* Show a message about mandatory cookies */
+
+        });
+            (tarteaucitron.job = tarteaucitron.job || []).push('facebook');
+        </script>
     </head>
     <body>
         {% include 'partials/header.html.twig'%}
         {% block body %}{% endblock %}
-
-        
-
         {% include 'partials/footer.html.twig'%}
-        {{ encore_entry_script_tags('app') }}
-        {% block javascripts %}
-        
-        
-        {% endblock %}
     </body>
 </html>

@@ -2,10 +2,14 @@
 
 namespace App\Form;
 
+use App\Entity\Category;
 use App\Entity\Post;
 
 use App\Form\ImageType;
 use App\Form\ApplicationType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -29,12 +33,6 @@ class PostType extends ApplicationType
                 $this->getConfiguration("Titre","Tapez un titre pour votre annonce ")
             )
             ->add(
-                'createdAt',
-                 DateType::class,
-                 $this->getConfiguration("Date de création","jj/mm/aaaa")
-            )
-            
-            ->add(
                 'introduction',
                 TextType::class,
                 $this->getConfiguration("Introduction","Donnez une description globale")
@@ -45,21 +43,53 @@ class PostType extends ApplicationType
                 $this->getConfiguration("Article","Mettez ici votre article...")
             )
             ->add(
-                'coverImage',
-                UrlType::class,
-                $this->getConfiguration("Url de l'image","Mettez une image sur votre article ")
+                'categories',
+                EntityType::class,
+                [
+                    'class' => Category::class,
+                    'choice_label' => 'name',
+                    'by_reference' => false,
+                    'multiple' => true,
+                    'attr' => [
+                        'class' => 'js-select2'
+                    ]
+                ]
             )
+             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+                $post = $event->getData();
+                $form = $event->getForm();
+
+                $form->add(
+                    'coverImage',
+                    ImageType::class,
+                    [
+                        'required' => !$post->getId()
+                    ]
+                );
+
+            })
             //gerer les sous formulaire pour afficher les images 
             ->add(
-                'images',
-                CollectionType::class,
+                'imageFirst',
+                ImageType::class,
                 [
-                    'entry_type'  =>  ImageType::class,
-                    'allow_add'   =>  true,
-                    'allow_delete'=>  true
+                    'required' => false
                 ]
-
-             )
+            )
+             ->add(
+                'imageSecond',
+                ImageType::class,
+                 [
+                    'required' => false
+                ]
+            )
+             ->add(
+                'imageLast',
+                ImageType::class,
+                 [
+                    'required' => false
+                ]
+            )
         ;
     }
 

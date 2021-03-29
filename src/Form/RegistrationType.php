@@ -20,27 +20,27 @@ class RegistrationType extends ApplicationType
             ->add(
                 'firstName',
                 TextType::class,
-                $this->getConfiguration('Nom')
+                $this->getConfiguration('Nom',"")
                 )
             ->add(
                 'lastName',
                 TextType::class,
-                $this->getConfiguration('Prénom')
+                $this->getConfiguration('Prénom',"")
                 )
             ->add(
                 'email',
                 EmailType::class,
-                $this->getConfiguration('Email')
+                $this->getConfiguration('Email',"")
                 )
             
             ->add(
                 'password',
                 PasswordType::class,
-                $this->getConfiguration('Password')
+                $this->getConfiguration('Password',"")
                 )
             ->add('confirmPassword',
                 PasswordType::class,
-                $this->getConfiguration('Veuillez confirmer votre Password')
+                $this->getConfiguration('Veuillez confirmer votre Password',"")
             )
         ;
     }

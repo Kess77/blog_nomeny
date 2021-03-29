@@ -5,6 +5,9 @@
 {% block body %}
     <div class="container my-5">
         <H3>gestion des articles </H3>
+        <div class="text-right my-3">
+          <a href="{{ path('admin_post_new') }}" class="btn btn-primary">Nouveau article</a>
+        </div>
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -21,7 +24,12 @@
                     <td>{{post.id}}</td>
                     <td>{{post.title}}</td>
                     <td>{{post.createdAt | date('d-m-Y')}}</td>
-                    <td>{{post.coverImage}}</td>
+                    <td>
+                      {# miniature de l'image #}
+                        {% if post.coverImage %}
+                            <img src="{{ vich_uploader_asset(post.coverImage, 'imageFile') }}" alt="" height="30" width="30">
+                        {% endif %}
+                    </td>
                     <td> 
                         <a href="{{ path('admin_post_edit',{'id':post.id}) }}" class="btn btn-primary"><i class="fas fa-edit"></i></a>
 

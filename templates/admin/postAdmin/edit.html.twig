@@ -1,60 +1,66 @@
 {% extends 'admin/base.html.twig' %}
-{% form_theme form _self %}
 
 {% block title %}Modification de l'article {{post.id}}{% endblock %}
 
 {% block body %}
     <div class="container">
-        <h2>Modification de l'article :  <strong>"{{post.title}}"</strong> </h2>
+        {% block _title %}
+            <h2>Modification de l'article :  <strong>"{{post.title}}"</strong> </h2>
+        {% endblock %}
 
-        {{form_start(form)}}
+        <div class="alert alert">
+            {{ form_errors(form) }}
+        </div>
 
-        {{form_widget(form)}}
-
-        <button type="submit" class="btn btn-warning">Enregistrer les Modifications</button>
+         {{ form_start(form) }}
+            <div class="row">
+                <div class="col-12">
+                    {{ form_row(form.categories)}}
+                </div>
+                <div class="col-12">
+                    {{ form_row(form.title)}}
+                </div>
+                 <div class="col-12 my-2">
+                    {{ form_row(form.introduction)}}
+                </div>
+                 <div class="col-12">
+                    {{ form_row(form.article)}}
+                </div>
+                 <div class="col-12 my-2">
+                    {{ form_row(form.coverImage)}}
+                     {% if post.coverImage %}
+                            <img src="{{ vich_uploader_asset(post.coverImage, 'imageFile') }}" alt="" height="200" width="200">
+                    {% endif %}
+                </div>
+                  <div class="col-12 my-2">
+                    <div class="row">
+                        <div class="col-3">
+                             {{ form_row(form.imageFirst)}}
+                              {% if post.imageFirst %}
+                                <img src="{{ vich_uploader_asset(post.imageFirst, 'imageFile') }}" alt="" height="70" width="70">
+                            {% endif %}
+                        </div>
+                         <div class="col-3">
+                             {{ form_row(form.imageSecond)}}
+                              {% if post.imageSecond %}
+                                <img src="{{ vich_uploader_asset(post.imageSecond, 'imageFile') }}" alt="" height="70" width="70">
+                            {% endif %}
+                        </div>
+                         <div class="col-3">
+                             {{ form_row(form.imageLast)}}
+                              {% if post.imageLast %}
+                                <img src="{{ vich_uploader_asset(post.imageLast, 'imageFile') }}" alt="" height="70" width="70">
+                            {% endif %}
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+            {% block _submit %}
+                <button type="submit" class="btn btn-success">Enregistrer les Modifications</button>
+            {% endblock %}
         
         {{form_end(form)}}
     </div>
 
-{% endblock %}
-
-{# gerer les block d'images #}
-
-{% block _post_images_widget %}
-    {{form_widget(form)}}
-{% endblock %}
-
-{% block _post_images_entry_row %}
-    <div id="block_{{id}}">
-         {{form_widget(form)}}
-    </div>
-{% endblock %}
-
-{% block _post_images_entry_widget %}
-    <div class="row align-items-center my-2">
-        <div class="col-4">
-            {% if value %}
-            <img src="{{value.url}}" alt="" class="container-fluid">
-            {% endif %}
-        </div>
-        <div class="col-6">
-            {{form_row(form.caption)}}
-        </div>
-        <div class="col-2">
-            <button type="button" class="btn btn-danger my-1" data-action="delete" data-target="#block_{{id}}" ><i class="fas fa-trash"></i></button>
-        </div>
-    </div>
-{% endblock %}
-
-{% block javascripts %}
-
-    <script>
-        $(document).ready(function(){
-            $('[data-action = "delete"]').on('click',function(){
-                const target = this.dataset.target;
-                $(target).remove();
-               
-            });
-        });
-    </script>
 {% endblock %}

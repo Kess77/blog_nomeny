@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Post;
 use App\Entity\Image;
 use App\Form\PostType;
+use App\Entity\Category;
 use App\Repository\PostRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,106 +23,29 @@ class PostController extends AbstractController
      */
     public function index(PostRepository $repo)
     {
-        $posts = $repo->findAll();
+        $posts = $repo->findBy([],['createdAt'=>'DESC'],4);
 
         return $this->render('post/index.html.twig', [
 
             'posts' => $posts
         ]);
     }
-    
     /**
-     * Permet de créer des articles ou d'ajouter, lier avec des formulaires
+     * Permet de filtrer par le champ recherche   
      * 
-     * @Route("posts/new",name="post_create")
-     * @IsGranted("ROLE_USER")
+     * @Route("posts/search/",name="post_search")
      *
-     * @return Response
+     * 
      */
-    public function create(Request $request, EntityManagerInterface $manager)
+    public function search(PostRepository $repo, Request $request)
     {
-        $post = new Post;
-        $image = new Image;
-        //$image->setUrl('http://placehold.it')
-        //      ->setCaption('titre 1');
-
-        //$post->addImage($image);
-
-        $form = $this->createForm(PostType::class,$post);
-
-        $form->handleRequest($request);
-        if($form->isSubmitted()&& $form->isValid()){
-            foreach($post->getImages() as $image){
-                $image->setPost($post);
-                $manager->persist($image);
-            }
-
-
-
-            $manager->persist($post);
-            $manager->flush();
-
-            $this->addFlash(
-                'success',
-                "L'article <strong> {$post->getTitle()} </strong> a été bien enregistrée"
-            );
-
-            return $this->redirectToRoute("post_show",[
-                'slug'=>$post->getSlug()
-            ]);
-
-        }
-
-        return $this->render('post/create.html.twig',[
-            'form'=>$form->createView()
-
+            $searchTerm = $request->get('q');
+        return $this->render('post/index.html.twig',[
+            'posts'=>$repo->search($searchTerm)
         ]);
 
     }
-    /**
-     * Permet d'afficher le formulaire d'edition pour pouvoir modifier 
-     *
-     * @Route("posts/{slug}/edit",name="post_edit")
-     * @Security("is_granted('ROLE_USER')and user===post.getAuthor()",message="Interdiction de modifier cette article")
-     * 
-     * @return Response
-     */
-    public function edit(Post $post, Request $request, EntityManagerInterface $manager){
-        
-        //$post = $repo->findOneBySlug($slug);
-        $form = $this->createForm(PostType::class,$post);
-
-        $form->handleRequest($request);
-
-        if($form->isSubmitted()&& $form->isValid()){
-            foreach($post->getImages() as $image){
-                $image->setPost($post);
-                $manager->persist($image);
-            }
-
-
-
-            $manager->persist($post);
-            $manager->flush();
-
-            $this->addFlash(
-                'success',
-                "L'article <strong> {$post->getTitle()} </strong> a été bien modifié"
-            );
-
-            return $this->redirectToRoute("post_show",[
-                'slug'=>$post->getSlug(),
-                
-            ]);
-
-        }
-
-        return $this->render('post/edit.html.twig',[
-            'form'=>$form->createView(),
-            'post'=>$post
-            
-        ]);
-    }
+    
      /**
      * Permet d'afficher une seule articles 
      * 
@@ -129,13 +53,29 @@ class PostController extends AbstractController
      *
      * 
      */
-    public function show($slug, PostRepository $repo)
+    public function show(Post $post)
     {
-        $post = $repo->findOneBySlug($slug);
-
         return $this->render('post/show.html.twig',[
             'post'=>$post
         ]);
 
     }
+     /**
+     * Permet d'afficher les articles par categories  
+     * 
+     * @Route("posts/category/{id}",name="post_show_categorie")
+     *
+     * 
+     */
+    public function showCategorie(Category $category,PostRepository $repo )
+    {
+
+        return $this->render('post/index.html.twig',[
+            'posts'=>$repo->getPostByCategory($category->getId(),5)
+        ]);
+
+    }
+    
+    
+    
 }

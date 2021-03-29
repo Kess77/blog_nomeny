@@ -11,10 +11,12 @@ use Symfony\Component\Form\AbstractType;
 
 class ApplicationType extends AbstractType{
 
-    protected function getConfiguration($label, $options =[]){
+    protected function getConfiguration($label,$placeholder, $options =[]){
         return array_merge([
-            'label'=>$label
-            
+            'label'=>$label,
+            'attr'=>[
+                'placeholder'=> $placeholder
+                ]
             ],$options)
         ;
 

@@ -1,22 +1,24 @@
  {% extends "base.html.twig" %}
- {% block title %}Homepage{% endblock %}
+ {% block title %}La ou mon coeur est {% endblock %}
  {% block body %}
     <div class="container">
-        <div class="row flex">
-      
-        {% for post in posts %} 
+        <div class="row">
             <div class="col-md-8 my-2">
-                <img src="{{post.coverImage}}"class="rounded mx-auto d-block img-thumbnail" alt="{{post.slug}}">
-            {# Affichage des block de titre #} 
-                {% include "post/_titlePost.html.twig" %} 
+                {% for post in posts %} 
+                    <div class="col-12 mt-4">
+                {#  Affichade de l'image #}
+                        {% if post.coverImage %}
+                            <img src="{{ vich_uploader_asset(post.coverImage, 'imageFile') }}" class="rounded mx-auto d-block img-thumbnail" alt="{{post.slug}}" height="377px" width="1200" style="height: 377px !important">
+                        {% endif %}
+                {# Affichage des block de titre #} 
+                        {% include "post/_titlePost.html.twig" %} 
+                    </div>
+                {% endfor %}
             </div>
-        {# Affichages des blocks à propos #} 
-            {% if loop.first %}   
-            <div class="col-md-4 my-2 ">
-                <img src="https://via.placeholder.com/400x200"class="img-fluid" alt="">
-            </div>
-            {% endif %}
-        {% endfor %}
+                {# Affichage du block à propos #}
+             <div class=" col-md-4 my-4 ">
+              {% include "post/_asidePost.html.twig" %}
+            </div> 
         </div>
     </div>
  {% endblock %}

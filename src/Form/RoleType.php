@@ -4,9 +4,11 @@ namespace App\Form;
 
 use App\Entity\Role;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Email;
 
 class RoleType extends AbstractType
 {
@@ -14,6 +16,7 @@ class RoleType extends AbstractType
     {
         $builder
             ->add('title',TextType::class)
+            
            
         ;
     }

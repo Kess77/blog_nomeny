@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
+ * Permet de gerer les roles dans la page administrateur 
+ * 
  * @Route("/admin/role", name="admin_role_")
  */
 class RoleController extends AbstractController
@@ -26,7 +28,7 @@ class RoleController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="new", methods={"GET","POST"})
+     * @Route("/new", name="new")
      */
     public function new(Request $request): Response
     {
